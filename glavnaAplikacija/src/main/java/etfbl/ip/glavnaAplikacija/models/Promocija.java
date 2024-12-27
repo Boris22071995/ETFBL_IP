@@ -1,5 +1,6 @@
 package etfbl.ip.glavnaAplikacija.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,5 +35,6 @@ public class Promocija {
 
     @Basic
     @Column(name = "datumTrajanja")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp datumTrajanja;
 }
