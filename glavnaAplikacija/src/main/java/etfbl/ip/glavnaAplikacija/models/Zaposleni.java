@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 @Table(name="zaposleni")
 public class Zaposleni {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idOsoba")
     private Integer idOsoba;
 
