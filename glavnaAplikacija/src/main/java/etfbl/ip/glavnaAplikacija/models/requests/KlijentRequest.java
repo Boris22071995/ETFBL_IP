@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class KlijentRequest {
     private Integer idOsoba;
-    private String brojLicnieKarte;
+    private String brojLicneKarte;
     private String email;
     private String brojTelefona;
     private String avatar;
@@ -21,6 +21,6 @@ public class KlijentRequest {
 
     @Override
     public String toString(){
-        return brojLicnieKarte + email + brojTelefona + brojKartice + brojPasosa + brojVozacke + blokiran;
+        return brojLicneKarte + email + brojTelefona + brojKartice + brojPasosa + brojVozacke + blokiran;
     }
 }

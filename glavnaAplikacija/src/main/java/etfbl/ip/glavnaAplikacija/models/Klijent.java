@@ -16,13 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 @Table(name="klijent")
 public class Klijent {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idOsoba")
     private Integer idOsoba;
 
     @Basic
     @Column(name = "brojLicneKarte")
-    private String brojLicnieKarte;
+    private String brojLicneKarte;
 
     @Basic
     @Column(name = "email")
