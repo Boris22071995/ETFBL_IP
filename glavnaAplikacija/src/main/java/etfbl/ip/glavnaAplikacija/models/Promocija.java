@@ -27,11 +27,9 @@ public class Promocija {
     @Column(name = "naslov")
     private String naslov;
 
-
     @Basic
     @Column(name = "opis")
     private String opis;
-
 
     @Basic
     @Column(name = "datumTrajanja")
