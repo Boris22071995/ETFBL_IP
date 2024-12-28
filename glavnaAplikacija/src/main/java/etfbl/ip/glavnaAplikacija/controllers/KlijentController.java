@@ -4,7 +4,6 @@ import etfbl.ip.glavnaAplikacija.models.Klijent;
 import etfbl.ip.glavnaAplikacija.models.requests.KlijentRequest;
 import etfbl.ip.glavnaAplikacija.services.KlijentService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

@@ -1,5 +1,6 @@
 package etfbl.ip.glavnaAplikacija.models.requests;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +15,7 @@ public class IznajmljivanjeRequest {
     private Integer idIznajmljivanja;
     private Integer idOsoba;
     private String voziloUuid;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp datumIVrijemeIznajmljivanja;
     private String lokacijaXPreuzimanja;
     private String lokacijaYPreuzimanja;
