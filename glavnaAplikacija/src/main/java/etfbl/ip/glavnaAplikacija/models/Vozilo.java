@@ -1,5 +1,6 @@
 package etfbl.ip.glavnaAplikacija.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,12 +19,13 @@ import java.sql.Date;
 @Table(name="vozilo")
 public class Vozilo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "uuid")
     private String uuid;
 
     @Basic
     @Column(name = "datumNabavke")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date datumNabavke;
 
     @Basic
@@ -49,4 +51,6 @@ public class Vozilo {
     @Basic
     @Column(name = "idProizvodjac")
     private Integer idProizvodjac;
+
+
 }
