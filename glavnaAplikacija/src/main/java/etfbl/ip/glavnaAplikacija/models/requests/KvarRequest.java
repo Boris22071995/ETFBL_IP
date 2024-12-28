@@ -1,5 +1,6 @@
 package etfbl.ip.glavnaAplikacija.models.requests;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.sql.Date;
 public class KvarRequest {
     private Integer idKvar;
     private String opis;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date datum;
     private String voziloUuid;
 
