@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BiciklRequest {
-    private String voxiloUuid;
+    private String voziloUuid;
     private String domet;
 
     @Override

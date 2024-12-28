@@ -16,9 +16,8 @@ import jakarta.persistence.*;
 @Table(name="bicikl")
 public class Bicikl {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "voziloUuid")
-    private String voxiloUuid;
+    private String voziloUuid;
 
     @Basic
     @Column(name = "domet")
