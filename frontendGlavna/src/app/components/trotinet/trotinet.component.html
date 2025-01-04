@@ -1,0 +1,96 @@
+<div class="mat-elevation-z8 trotinet-div" id="trotinet-div">
+    <table mat-table [dataSource]="dataSource">
+  
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+  
+      <!-- Weight Column -->
+      <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef> Weight </th>
+        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+      </ng-container>
+  
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="symbol">
+        <th mat-header-cell *matHeaderCellDef> Symbol </th>
+        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 6, 10, 20]"
+                   showFirstLastButtons
+                   aria-label="Select page of periodic elements">
+    </mat-paginator>
+    <section>
+      <div class="example-button-row">
+        <button mat-raised-button (click)="prebaci()">Dodaj novi trotinet</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="dodaj-trotinet" id="dodaj-trotinet-id">
+    <form action="" method="post" class="forma-unos">
+      <mat-form-field class="example-full-width">
+        <mat-label>Serijski broj</mat-label>
+        <input matInput placeholder="12345A678" id="uuid" name="uuids">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Datum nabavke</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker">
+          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Cijena vozila</mat-label>
+        <input type="number" matInput placeholder="1000.00" id="cijena" name="cijena" min="0">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Model</mat-label>
+        <input matInput placeholder="Model-A" id="model" name="model">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Slika</mat-label>
+        <input matInput placeholder="Slika" id="slika" name="slika">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Proizvodjac</mat-label>
+        <mat-select>
+          @for (food of foods; track food) {
+            <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Maksimalna brzina</mat-label>
+        <input type="number" matInput placeholder="100" id="brzina" name="brzina" min="0">
+      </mat-form-field>
+
+      <div class="example-button-row">
+        <button mat-raised-button>Kreiraj Trotinet</button>
+        <button mat-raised-button (click)="ponisti()">Ponisti</button>
+      </div>
+
+    </form>
+  </div>
+  

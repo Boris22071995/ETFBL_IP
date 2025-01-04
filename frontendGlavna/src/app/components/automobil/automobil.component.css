@@ -1,0 +1,25 @@
+.example-button-row {
+    display: table-cell;
+    max-width: 600px;
+  }
+  
+  .example-button-row .mat-mdc-button-base {
+    margin: 8px 8px 8px 0;
+  }
+  .automobil-div {
+    display: block;
+  }
+
+  .dodaj-automobil {
+    display: none;
+  }
+
+  .forma-unos {
+    justify-content: center;
+    margin: 10px;
+    pad: 10px;
+  }
+  .example-full-width {
+    width: 100%;
+  }
+  

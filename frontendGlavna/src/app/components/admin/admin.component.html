@@ -1,0 +1,42 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row  class="first-row">
+        <button mat-icon-button>
+            <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+        </button>
+        <h1>Admin stranica!</h1>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav opened="true" >
+        <mat-nav-list>
+            <mat-tree #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor">
+                <!-- This is the tree node template for leaf nodes -->
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                  <!-- use a disabled button to provide padding for tree leaf -->
+                  <button mat-icon-button disabled></button>
+                  <a (click)="route(node.name)">{{node.name}}</a>
+                </mat-tree-node>
+                <!-- This is the tree node template for expandable nodes -->
+                <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding matTreeNodeToggle
+                               [cdkTreeNodeTypeaheadLabel]="node.name">
+                  <button mat-icon-button matTreeNodeToggle
+                          [attr.aria-label]="'Toggle ' + node.name">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                      {{tree.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                    </mat-icon>
+                  </button>
+                  {{node.name}}
+                </mat-tree-node>
+              </mat-tree>
+             
+              <a mat-list-item >Proizvodjac</a>
+
+
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div style="height: 88vh;">
+
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
