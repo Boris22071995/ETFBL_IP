@@ -13,4 +13,5 @@ public interface BiciklService {
     Bicikl createBicikl(BiciklRequest biciklRequest);
     Optional<Bicikl> getBicikl(String id);
     void delete(String id);
+    List<Object[]> getAllBiciklWithVozilo();
 }

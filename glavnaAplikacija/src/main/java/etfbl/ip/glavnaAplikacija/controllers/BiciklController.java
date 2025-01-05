@@ -27,8 +27,8 @@ public class BiciklController {
     }
 
     @GetMapping
-    public List<Bicikl> getAll() {
-        return biciklService.getAll();
+    public List<Object[]> getAll() {
+        return biciklService.getAllBiciklWithVozilo();
     }
 
     @GetMapping("/{id}")

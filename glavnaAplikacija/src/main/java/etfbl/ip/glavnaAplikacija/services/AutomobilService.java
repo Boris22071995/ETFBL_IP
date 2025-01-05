@@ -13,4 +13,5 @@ public interface AutomobilService {
     Automobil createAutomobil(AutomobilRequest automobilRequest);
     Optional<Automobil> getAutomobil(String id);
     void delete(String id);
+    List<Object[]> getAllAutomobilWithVozilo();
 }

@@ -27,8 +27,8 @@ public class AutomobilController {
     }
 
     @GetMapping
-    public List<Automobil> getAll() {
-        return automobilService.getAll();
+    public List<Object[]> getAll() {
+        return automobilService.getAllAutomobilWithVozilo();
     }
 
     @GetMapping("/{id}")

@@ -49,4 +49,9 @@ public class TrotinetServiceImplementation implements TrotinetService {
     public void delete(String id) {
         trotinetRepository.deleteById(id);
     }
+
+    @Override
+    public List<Object[]> getAllTrotinetWithVozilo() {
+        return trotinetRepository.findAllTrotinetWithVozilo();
+    }
 }

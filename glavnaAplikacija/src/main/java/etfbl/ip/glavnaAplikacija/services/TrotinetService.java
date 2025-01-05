@@ -13,4 +13,5 @@ public interface TrotinetService {
     Trotinet createTrotinet(TrotinetRequest trotinetRequest);
     Optional<Trotinet> getTrotinet(String id);
     void delete(String id);
+    List<Object[]> getAllTrotinetWithVozilo();
 }

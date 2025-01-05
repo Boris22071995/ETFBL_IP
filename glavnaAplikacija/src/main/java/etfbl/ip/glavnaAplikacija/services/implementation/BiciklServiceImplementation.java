@@ -43,4 +43,9 @@ public class BiciklServiceImplementation implements BiciklService {
     public void delete(String id) {
         biciklRepository.deleteById(id);
     }
+
+    @Override
+    public List<Object[]> getAllBiciklWithVozilo() {
+        return biciklRepository.findAllBiciklWithVozilo();
+    }
 }

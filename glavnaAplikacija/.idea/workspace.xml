@@ -7,6 +7,19 @@
     <list default="true" id="05018db4-b1b7-445a-b44b-6ce4f56dce4e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/spring.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/spring.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/spring.log.2024-12-27.0.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/controllers/AutomobilController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/controllers/AutomobilController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/controllers/BiciklController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/controllers/BiciklController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/controllers/TrotinetController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/controllers/TrotinetController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/repositories/AutomobilRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/repositories/AutomobilRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/repositories/BiciklRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/repositories/BiciklRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/repositories/TrotinetRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/repositories/TrotinetRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/AutomobilService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/AutomobilService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/BiciklService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/BiciklService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/TrotinetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/TrotinetService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/implementation/AutomobilServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/implementation/AutomobilServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/implementation/BiciklServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/implementation/BiciklServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/implementation/TrotinetServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/implementation/TrotinetServiceImplementation.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -27,8 +27,8 @@ public class TrotinetController {
     }
 
     @GetMapping
-    public List<Trotinet> getAll() {
-        return trotinetService.getAll();
+    public List<Object[]> getAll() {
+        return trotinetService.getAllTrotinetWithVozilo();
     }
 
     @GetMapping("/{id}")

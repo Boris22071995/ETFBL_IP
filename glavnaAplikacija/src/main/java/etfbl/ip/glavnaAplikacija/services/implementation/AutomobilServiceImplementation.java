@@ -43,4 +43,9 @@ public class AutomobilServiceImplementation implements AutomobilService {
     public void delete(String id) {
         automobilRepository.deleteById(id);
     }
+
+    @Override
+    public List<Object[]> getAllAutomobilWithVozilo() {
+        return automobilRepository.findAllAutomobilWithVozilo();
+    }
 }
