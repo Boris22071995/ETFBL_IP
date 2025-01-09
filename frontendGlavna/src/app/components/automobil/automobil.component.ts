@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {AfterViewInit, Component, ViewChild, ChangeDetectionStrategy, OnInit, Injector, inject} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
@@ -13,22 +13,38 @@ import {MatIconModule} from '@angular/material/icon';
 
 
 import {MatSelectModule} from '@angular/material/select';
+import { AutomobilService } from '../../services/automobil/automobil.service';
+import { Automobil } from '../../interface/automobil/Automobil';
+import { provideHttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http'; 
 
 
 @Component({
   selector: 'app-automobil',
-  imports: [MatTableModule, MatPaginatorModule, MatButtonModule,MatSelectModule, MatFormFieldModule,FormsModule,MatInputModule,MatDatepickerModule,MatIconModule],
+  imports: [MatTableModule,HttpClientModule, MatPaginatorModule, MatButtonModule,MatSelectModule, MatFormFieldModule,FormsModule,MatInputModule,MatDatepickerModule,MatIconModule],
   templateUrl: './automobil.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter(),AutomobilService],
   styleUrl: './automobil.component.css'
 })
-export class AutomobilComponent implements AfterViewInit{
+export class AutomobilComponent implements AfterViewInit, OnInit{
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
+  automobili: any[] = [];
+  constructor(private automobilService: AutomobilService){}
 
-
+  ngOnInit(): void {
+    this.automobilService.getAutomobili().subscribe(
+      (response) => {
+        this.automobili = response;  // Čuvanje podataka u promenljivoj
+        console.log('Podaci:', this.automobili);  // Prikaz podataka u konzoli
+      },
+      (error) => {
+        console.error('Greška prilikom dobijanja podataka:', error);  // Obrađivanje greške
+      }
+    );
+  }
   ngAfterViewInit() {
     if (this.paginator) {
       this.dataSource.paginator = this.paginator;
