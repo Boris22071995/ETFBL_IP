@@ -1,9 +1,18 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environment/environment';
+import { Observable } from 'rxjs';
+import { Trotinet } from '../../interface/trotinet/Trotinet';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TrotinetService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+  url = environment.apiUrl;
+
+  public getTrotineti(): Observable<Trotinet[]> {
+    return this.http.get<Trotinet[]>(this.url + "/trotinet",{headers: environment.headerOption})
+  }
 }

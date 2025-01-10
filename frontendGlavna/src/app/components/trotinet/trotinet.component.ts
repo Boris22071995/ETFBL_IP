@@ -1,35 +1,80 @@
-import {AfterViewInit, Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import {AfterViewInit, Component, ViewChild, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-
 import {FormsModule} from '@angular/forms';
-
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-
 import {MatIconModule} from '@angular/material/icon';
-
-
 import {MatSelectModule} from '@angular/material/select';
+import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { TrotinetService } from '../../services/trotinet/trotinet.service';
+
 @Component({
   selector: 'app-trotinet',
-  imports: [MatTableModule, MatPaginatorModule, MatButtonModule,MatFormFieldModule,MatInputModule,FormsModule,MatDatepickerModule,MatIconModule,MatSelectModule],
+  imports: [MatTableModule,HttpClientModule, MatPaginatorModule, MatButtonModule,MatFormFieldModule,MatInputModule,FormsModule,MatDatepickerModule,MatIconModule,MatSelectModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter(),DatePipe,TrotinetService],
   templateUrl: './trotinet.component.html',
   styleUrl: './trotinet.component.css'
 })
-export class TrotinetComponent implements AfterViewInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-    dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-    @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
-    ngAfterViewInit() {
+export class TrotinetComponent implements AfterViewInit,OnInit {
+  
+    displayedColumns2: string[] = ['serijskiBroj', 'maksimalnaBrzina', 'datumNabavke', 'cijenaNabavke', 'model','pokvareno','iznajmljeno','slika','proizvodjac'];
+  dataSource2 = new MatTableDataSource<any>([]);
+  trotineti: any[] = [];
+  trotinet: any[] = [];
+  formattedDate: string = '';
+  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
+  constructor(private trotinetService: TrotinetService, private datePipe: DatePipe){}
+  ngOnInit(): void {
+      this.loadData();
+  }
+  ngAfterViewInit() {
       if (this.paginator) {
-        this.dataSource.paginator = this.paginator;
+        this.dataSource2.paginator = this.paginator;
       }
+    }
+    public loadData() {
+      this.trotinetService.getTrotineti().subscribe(
+        (response)=> {
+          this.trotineti = response;
+          this.trotineti.forEach(trotinet => {
+            const keys = Object.keys(trotinet);
+            let iznajmljeno: string = '';
+            let pokvareno: string = '';
+            if(trotinet[keys[5]]===true) {
+              pokvareno = 'DA';
+            } else {
+              pokvareno = 'NE';
+            }
+            if(trotinet[keys[6]]===true) {
+              iznajmljeno = 'DA';
+            }else {
+              iznajmljeno = 'NE';
+            }
+            const timestamp = trotinet[keys[2]];
+            const date = new Date(timestamp);
+
+            const year = date.getFullYear();
+            const month = ('0' + (date.getMonth() + 1)).slice(-2);
+            const day = ('0' + date.getDate()).slice(-2); 
+            const formattedDate = `${year}-${month}-${day}`;
+
+            const trotinetTemp=[{serijskiBroj:trotinet[keys[1]], maksimalnaBrzina: trotinet[keys[0]], datumNabavke: formattedDate, cijenaNabavke: trotinet[keys[3]], model: trotinet[keys[4]],
+              pokvareno: pokvareno, iznajmljeno: iznajmljeno, slika: trotinet[keys[7]],
+              proizvodjac: trotinet[keys[8]]}];
+              this.trotinet.push(trotinetTemp);
+              this.dataSource2.data = [...trotinetTemp];
+          })
+        },
+        (error) => {
+          console.error('Greška prilikom dobijanja podataka:', error);
+        }
+      );
     }
 
     foods: Food[] = [
@@ -60,39 +105,8 @@ export class TrotinetComponent implements AfterViewInit {
       }
     }
 }
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
 
 interface Food {
   value: string;
   viewValue: string;
 }
-
-
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-];

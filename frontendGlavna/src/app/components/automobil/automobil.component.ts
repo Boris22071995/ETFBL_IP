@@ -5,52 +5,76 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
-
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-
 import {MatIconModule} from '@angular/material/icon';
-
-
 import {MatSelectModule} from '@angular/material/select';
 import { AutomobilService } from '../../services/automobil/automobil.service';
-import { Automobil } from '../../interface/automobil/Automobil';
-import { provideHttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http'; 
-
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-automobil',
   imports: [MatTableModule,HttpClientModule, MatPaginatorModule, MatButtonModule,MatSelectModule, MatFormFieldModule,FormsModule,MatInputModule,MatDatepickerModule,MatIconModule],
   templateUrl: './automobil.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [provideNativeDateAdapter(),AutomobilService],
+  providers: [provideNativeDateAdapter(),DatePipe,AutomobilService],
   styleUrl: './automobil.component.css'
 })
 export class AutomobilComponent implements AfterViewInit, OnInit{
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns2: string[] = ['serijskiBroj', 'opis', 'datumNabavke', 'cijenaNabavke', 'model','pokvareno','iznajmljeno','slika','proizvodjac'];
+  dataSource2 = new MatTableDataSource<any>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   automobili: any[] = [];
-  constructor(private automobilService: AutomobilService){}
+  auto: any[] = [];
+  formattedDate: string = '';
+  constructor(private automobilService: AutomobilService, private datePipe: DatePipe){}
 
   ngOnInit(): void {
-    this.automobilService.getAutomobili().subscribe(
-      (response) => {
-        this.automobili = response;  // Čuvanje podataka u promenljivoj
-        console.log('Podaci:', this.automobili);  // Prikaz podataka u konzoli
-      },
-      (error) => {
-        console.error('Greška prilikom dobijanja podataka:', error);  // Obrađivanje greške
-      }
-    );
+    this.loadData();
   }
   ngAfterViewInit() {
     if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
+      this.dataSource2.paginator = this.paginator;
     }
+  }
 
-    
+  public loadData() {
+    this.automobilService.getAutomobili().subscribe(
+      (response) => {
+        this.automobili = response;
+        this.automobili.forEach(automobil => {
+        const keys = Object.keys(automobil);
+        let iznajmljeno: string = '' ;
+        let pokvareno: string = '';
+        if(automobil[keys[5]]===true) {
+          pokvareno = 'DA';
+        } else {
+          pokvareno = 'NE';
+        } 
+        if(automobil[keys[6]]===true) {
+          iznajmljeno = 'DA';
+        } else {
+          iznajmljeno = 'NE';
+        } 
+        const timestamp = automobil[keys[2]];
+        const date = new Date(timestamp);
+
+        const year = date.getFullYear();
+        const month = ('0' + (date.getMonth() + 1)).slice(-2);
+        const day = ('0' + date.getDate()).slice(-2); 
+        const formattedDate = `${year}-${month}-${day}`;
+        const autoTemp = [{serijskiBroj: automobil[keys[0]], opis: automobil[keys[1]], datumNabavke: formattedDate, cijenaNabavke: automobil[keys[3]], model: automobil[keys[4]],
+           pokvareno: pokvareno,iznajmljeno: iznajmljeno,
+            slika: automobil[keys[7]], proizvodjac: automobil[keys[8]]}];
+           this.auto.push(autoTemp);
+           this.dataSource2.data = [...autoTemp];          
+        })
+      },
+      (error) => {
+        console.error('Greška prilikom dobijanja podataka:', error);
+      }
+    );
   }
   foods: Food[] = [
     {value: 'proizvodjac-0', viewValue: 'PROIZVODJAC1'},
@@ -60,30 +84,20 @@ export class AutomobilComponent implements AfterViewInit, OnInit{
   public prebaci() {
     const inputElement = document.getElementById('dodaj-automobil-id');
     const inputElement2 = document.getElementById('automobil-div');
-
     if(inputElement && inputElement2) {
       inputElement2.style.display = 'none';
-      inputElement.style.display = 'block';
-      
+      inputElement.style.display = 'block';     
     }
   }
 
   public ponisti() {
     const inputElement = document.getElementById('dodaj-automobil-id');
     const inputElement2 = document.getElementById('automobil-div');
-
     if(inputElement && inputElement2) {     
       inputElement.style.display = 'none';
-      inputElement2.style.display = 'block';
-      
+      inputElement2.style.display = 'block';     
     }
   }
-}
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
 }
 
 interface Food {
@@ -91,25 +105,3 @@ interface Food {
   viewValue: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-];

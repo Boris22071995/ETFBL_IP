@@ -1,5 +1,5 @@
 export interface Automobil {
-    vozilUuid: string;        // varchar
+  serijskiBroj: string;        // varchar
     opis: string;             // varchar
     datumNabavke: Date;      // date
     cijenaNabavke: number;   // float
@@ -7,5 +7,5 @@ export interface Automobil {
     pokvareno: boolean;      // tinyint (tretiramo kao boolean)
     iznajmljeno: boolean;    // tinyint (tretiramo kao boolean)
     slika: string;           // varchar
-    idProizvodjac: number;  // Int
+    proizvodjac: number;  // Int
   }
