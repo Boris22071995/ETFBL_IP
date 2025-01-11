@@ -1,4 +1,5 @@
 <div class="mat-elevation-z8 automobil-div" id="automobil-div">
+    
   <table mat-table [dataSource]="dataSource2">
     <ng-container matColumnDef="serijskiBroj">
       <th mat-header-cell *matHeaderCellDef> Serijski broj </th>
@@ -59,15 +60,15 @@
     </section>
   </div>
   <div class="dodaj-automobil" id="dodaj-automobil-id">
-    <form action="" method="post" class="forma-unos">
+    <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)" class="forma-unos">
       <mat-form-field class="example-full-width">
         <mat-label>Serijski broj</mat-label>
-        <input matInput placeholder="12345A678" id="uuid" name="uuids">
+        <input matInput placeholder="12345A678" id="uuid" name="uuids" [(ngModel)]="serijskiBroj" required>
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
         <mat-label>Datum nabavke</mat-label>
-        <input matInput [matDatepicker]="picker">
+        <input matInput [matDatepicker]="picker" [(ngModel)]="datumNabavke" name="datumNabavke" required>
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker">
           <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
@@ -77,23 +78,23 @@
 
       <mat-form-field class="example-full-width">
         <mat-label>Cijena vozila</mat-label>
-        <input type="number" matInput placeholder="1000.00" id="cijena" name="cijena" min="0">
+        <input type="number" matInput placeholder="1000.00" id="cijena" name="cijena" [(ngModel)]="cijena" min="0" required>
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
         <mat-label>Model</mat-label>
-        <input matInput placeholder="Model-A" id="model" name="model">
+        <input matInput placeholder="Model-A" id="model" name="model" [(ngModel)]="model" required>
       </mat-form-field>
 
       
       <mat-form-field class="example-full-width">
         <mat-label>Slika</mat-label>
-        <input matInput placeholder="Slika" id="slika" name="slika">
+        <input matInput placeholder="Slika" id="slika" name="slika"  [(ngModel)]="slika">
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
         <mat-label>Proizvodjac</mat-label>
-        <mat-select>
+        <mat-select [(ngModel)]="proizvodjac" name="proizvodjac" required>
           @for (food of foods; track food) {
             <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
           }
@@ -102,11 +103,11 @@
      
       <mat-form-field class="example-full-width">
         <mat-label>Opis</mat-label>
-        <input matInput placeholder="Opis" id="opis" name="opis">
+        <input matInput placeholder="Opis" id="opis" name="opis" [(ngModel)]="opis">
       </mat-form-field>
 
       <div class="example-button-row">
-        <button mat-raised-button>Kreiraj Automobil</button>
+        <button mat-raised-button type="submit">Kreiraj Automobil</button>
         <button mat-raised-button (click)="ponisti()">Ponisti</button>
       </div>
 

@@ -15,4 +15,8 @@ export class AutomobilService {
   public getAutomobili(): Observable<Automobil[]> {
     return this.http.get<Automobil[]>(this.url + "/automobil",{headers: environment.headerOption});
   }
+
+  public addAutomobil(vozilo:any) {
+    return this.http.post(this.url + "/vozilo",vozilo);
+  }
 }

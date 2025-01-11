@@ -13,6 +13,7 @@ import { AutomobilService } from '../../services/automobil/automobil.service';
 import { HttpClientModule } from '@angular/common/http'; 
 import { DatePipe } from '@angular/common';
 
+
 @Component({
   selector: 'app-automobil',
   imports: [MatTableModule,HttpClientModule, MatPaginatorModule, MatButtonModule,MatSelectModule, MatFormFieldModule,FormsModule,MatInputModule,MatDatepickerModule,MatIconModule],
@@ -28,7 +29,7 @@ export class AutomobilComponent implements AfterViewInit, OnInit{
   automobili: any[] = [];
   auto: any[] = [];
   formattedDate: string = '';
-  constructor(private automobilService: AutomobilService, private datePipe: DatePipe){}
+  constructor(private automobilService: AutomobilService, private datePipe: DatePipe, ){}
 
   ngOnInit(): void {
     this.loadData();
@@ -96,6 +97,51 @@ export class AutomobilComponent implements AfterViewInit, OnInit{
     if(inputElement && inputElement2) {     
       inputElement.style.display = 'none';
       inputElement2.style.display = 'block';     
+    }
+  }
+
+  serijskiBroj: string = '';
+  datumNabavke: Date | null = null;
+  cijena: number = 0;
+  model: string = '';
+  slika: string = '';
+  proizvodjac: string = '';
+  opis: string = '';
+
+  onSubmit(form: any) {
+    if (form.valid) {
+      const date = this.datumNabavke;
+      let date2 ;
+      if(date){
+        const year = date.getFullYear();
+        const month = ('0' + (date.getMonth() + 1)).slice(-2);  // Dodajemo 1 jer meseci počinju od 0
+        const day = ('0' + date.getDate()).slice(-2);  // Dodajemo 0 ako je dan manji od 10
+        const formattedDate = `${year}-${month}-${day}`;
+        date2 = formattedDate;
+      }
+
+      const vozilo = {
+        uuid: this.serijskiBroj,
+        datumNabavke: date2,
+        cijenaNabavke: this.cijena,
+        model: this.model,
+        pokvareno: 0,
+        iznajmljeno: 0,
+        slika: this.slika,
+        idProizvodjac: 1
+      }
+      this.automobilService.addAutomobil(vozilo).subscribe((res)=>{
+        console.log("Uspjesno ste dodali vozilo");
+      });
+      console.log(vozilo);
+      // console.log('Podaci forme:', form.value);
+      // console.log('Serijski broj:', this.serijskiBroj);
+      // console.log('Datum nabavke:', this.datumNabavke);
+      // console.log('Cijena:', this.cijena);
+      // console.log('Model:', this.model);
+      // console.log('Slika:', this.slika);
+      // console.log('Proizvodjac:', this.proizvodjac);
+      // console.log('Opis:', this.opis);
     }
   }
 }
