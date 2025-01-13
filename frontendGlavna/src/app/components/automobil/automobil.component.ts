@@ -41,6 +41,7 @@ export class AutomobilComponent implements AfterViewInit, OnInit{
   }
 
   public loadData() {
+    this.auto = [];
     this.automobilService.getAutomobili().subscribe(
       (response) => {
         this.automobili = response;
@@ -65,12 +66,12 @@ export class AutomobilComponent implements AfterViewInit, OnInit{
         const month = ('0' + (date.getMonth() + 1)).slice(-2);
         const day = ('0' + date.getDate()).slice(-2); 
         const formattedDate = `${year}-${month}-${day}`;
-        const autoTemp = [{serijskiBroj: automobil[keys[0]], opis: automobil[keys[1]], datumNabavke: formattedDate, cijenaNabavke: automobil[keys[3]], model: automobil[keys[4]],
+        const autoTemp = {serijskiBroj: automobil[keys[0]], opis: automobil[keys[1]], datumNabavke: formattedDate, cijenaNabavke: automobil[keys[3]], model: automobil[keys[4]],
            pokvareno: pokvareno,iznajmljeno: iznajmljeno,
-            slika: automobil[keys[7]], proizvodjac: automobil[keys[8]]}];
-           this.auto.push(autoTemp);
-           this.dataSource2.data = [...autoTemp];          
+            slika: automobil[keys[7]], proizvodjac: automobil[keys[8]]};
+           this.auto.push(autoTemp);         
         })
+        this.dataSource2.data = this.auto;
       },
       (error) => {
         console.error('Greška prilikom dobijanja podataka:', error);
@@ -97,6 +98,7 @@ export class AutomobilComponent implements AfterViewInit, OnInit{
     if(inputElement && inputElement2) {     
       inputElement.style.display = 'none';
       inputElement2.style.display = 'block';     
+      this.loadData();
     }
   }
 
@@ -130,19 +132,22 @@ export class AutomobilComponent implements AfterViewInit, OnInit{
         slika: this.slika,
         idProizvodjac: 1
       }
-      this.automobilService.addAutomobil(vozilo).subscribe((res)=>{
-        console.log("Uspjesno ste dodali vozilo");
+
+      this.automobilService.addVozilo(vozilo).subscribe((res: any)=>{
+        console.log("Uspjesno ste dodali vozilo", res);
+        const autoTemp = {
+          vozilUuid: res?.uuid,
+          opis: this.opis
+        }
+        this.automobilService.addAutomobil(autoTemp).subscribe((res)=>{
+          console.log("Uspjesno ste dodali automobil", res);
+          this.ponisti();
+        });
       });
       console.log(vozilo);
-      // console.log('Podaci forme:', form.value);
-      // console.log('Serijski broj:', this.serijskiBroj);
-      // console.log('Datum nabavke:', this.datumNabavke);
-      // console.log('Cijena:', this.cijena);
-      // console.log('Model:', this.model);
-      // console.log('Slika:', this.slika);
-      // console.log('Proizvodjac:', this.proizvodjac);
-      // console.log('Opis:', this.opis);
     }
+    
+    
   }
 }
 

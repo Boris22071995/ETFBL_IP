@@ -16,7 +16,11 @@ export class AutomobilService {
     return this.http.get<Automobil[]>(this.url + "/automobil",{headers: environment.headerOption});
   }
 
-  public addAutomobil(vozilo:any) {
+  public addVozilo(vozilo:any) {
     return this.http.post(this.url + "/vozilo",vozilo);
+  }
+
+  public addAutomobil(automobil:any) {
+    return this.http.post(this.url + "/automobil",automobil);
   }
 }
