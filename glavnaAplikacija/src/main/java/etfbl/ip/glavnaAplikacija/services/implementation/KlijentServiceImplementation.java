@@ -47,4 +47,9 @@ public class KlijentServiceImplementation implements KlijentService {
     public void delete(Integer id) {
         klijentRepository.deleteById(id);
     }
+
+    @Override
+    public List<Object[]> getAllZaposleniWithOsoba() {
+        return klijentRepository.findAllKlijentWithOsoba();
+    }
 }

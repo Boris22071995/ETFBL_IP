@@ -5,12 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05018db4-b1b7-445a-b44b-6ce4f56dce4e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../frontendGlavna/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontendGlavna/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontendGlavna/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontendGlavna/src/app/app.routes.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontendGlavna/src/app/components/automobil/automobil.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontendGlavna/src/app/components/automobil/automobil.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontendGlavna/src/app/services/automobil/automobil.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontendGlavna/src/app/services/automobil/automobil.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/spring.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/spring.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/spring.log.2024-12-29.0.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/spring.log.2025-01-05.0.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/controllers/KlijentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/controllers/KlijentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/controllers/ZaposleniController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/controllers/ZaposleniController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/repositories/KlijentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/repositories/KlijentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/repositories/ZaposleniRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/repositories/ZaposleniRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/KlijentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/KlijentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/ZaposleniService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/ZaposleniService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/implementation/KlijentServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/implementation/KlijentServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/implementation/ZaposleniServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/etfbl/ip/glavnaAplikacija/services/implementation/ZaposleniServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/etfbl/ip/glavnaAplikacija/controllers/ZaposleniController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/etfbl/ip/glavnaAplikacija/controllers/ZaposleniController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/etfbl/ip/glavnaAplikacija/repositories/ZaposleniRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/etfbl/ip/glavnaAplikacija/repositories/ZaposleniRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/etfbl/ip/glavnaAplikacija/services/ZaposleniService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/etfbl/ip/glavnaAplikacija/services/ZaposleniService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/etfbl/ip/glavnaAplikacija/services/implementation/ZaposleniServiceImplementation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/etfbl/ip/glavnaAplikacija/services/implementation/ZaposleniServiceImplementation.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

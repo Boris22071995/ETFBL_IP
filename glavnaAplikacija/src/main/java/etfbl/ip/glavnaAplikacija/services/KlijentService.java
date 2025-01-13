@@ -13,4 +13,5 @@ public interface KlijentService {
     Klijent createKlijent(KlijentRequest klijentRequest);
     Optional<Klijent> getKlijent(Integer id);
     void delete(Integer id);
+    List<Object[]> getAllZaposleniWithOsoba();
 }

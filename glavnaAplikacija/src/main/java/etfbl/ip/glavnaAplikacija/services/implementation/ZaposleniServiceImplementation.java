@@ -43,4 +43,9 @@ public class ZaposleniServiceImplementation implements ZaposleniService {
     public void delete(Integer id) {
         zaposleniRepository.deleteById(id);
     }
+
+    @Override
+    public List<Object[]> getAllZaposleniWithOsoba() {
+        return zaposleniRepository.findAllZaposleniWithOsoba();
+    }
 }

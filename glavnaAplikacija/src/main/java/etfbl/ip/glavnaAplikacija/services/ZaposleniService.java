@@ -13,4 +13,5 @@ public interface ZaposleniService {
     Zaposleni createZaposleni(ZaposleniRequest zaposleniRequest);
     Optional<Zaposleni> getZaposleni(Integer id);
     void delete(Integer id);
+    List<Object[]> getAllZaposleniWithOsoba();
 }

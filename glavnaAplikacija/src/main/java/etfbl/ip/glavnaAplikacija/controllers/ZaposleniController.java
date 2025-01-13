@@ -27,8 +27,8 @@ public class ZaposleniController {
     }
 
     @GetMapping
-    public List<Zaposleni> getAll() {
-        return zaposleniService.getAll();
+    public List<Object[]> getAll() {
+        return zaposleniService.getAllZaposleniWithOsoba();
     }
 
     @GetMapping("/{id}")
