@@ -12,6 +12,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { AutomobilService } from '../../services/automobil/automobil.service';
 import { HttpClientModule } from '@angular/common/http'; 
 import { DatePipe } from '@angular/common';
+import { SelectionModel } from '@angular/cdk/collections';
 
 
 @Component({
@@ -23,12 +24,13 @@ import { DatePipe } from '@angular/common';
   styleUrl: './automobil.component.css'
 })
 export class AutomobilComponent implements AfterViewInit, OnInit{
-  displayedColumns2: string[] = ['serijskiBroj', 'opis', 'datumNabavke', 'cijenaNabavke', 'model','pokvareno','iznajmljeno','slika','proizvodjac'];
+  displayedColumns2: string[] = ['opis', 'datumNabavke', 'cijenaNabavke', 'model','pokvareno','iznajmljeno','slika','proizvodjac'];
   dataSource2 = new MatTableDataSource<any>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   automobili: any[] = [];
   auto: any[] = [];
   formattedDate: string = '';
+  selection = new SelectionModel<any>(false,[]);
   constructor(private automobilService: AutomobilService, private datePipe: DatePipe, ){}
 
   ngOnInit(): void {
@@ -66,7 +68,7 @@ export class AutomobilComponent implements AfterViewInit, OnInit{
         const month = ('0' + (date.getMonth() + 1)).slice(-2);
         const day = ('0' + date.getDate()).slice(-2); 
         const formattedDate = `${year}-${month}-${day}`;
-        const autoTemp = {serijskiBroj: automobil[keys[0]], opis: automobil[keys[1]], datumNabavke: formattedDate, cijenaNabavke: automobil[keys[3]], model: automobil[keys[4]],
+        const autoTemp = {opis: automobil[keys[1]], datumNabavke: formattedDate, cijenaNabavke: automobil[keys[3]], model: automobil[keys[4]],
            pokvareno: pokvareno,iznajmljeno: iznajmljeno,
             slika: automobil[keys[7]], proizvodjac: automobil[keys[8]]};
            this.auto.push(autoTemp);         
@@ -145,10 +147,13 @@ export class AutomobilComponent implements AfterViewInit, OnInit{
         });
       });
       console.log(vozilo);
-    }
-    
-    
+    }  
   }
+  selectRow(row: any) {
+    this.selection.toggle(row); // Toggle selektovanje reda
+    console.log('Selektovani podaci:', row);
+  }
+
 }
 
 interface Food {
