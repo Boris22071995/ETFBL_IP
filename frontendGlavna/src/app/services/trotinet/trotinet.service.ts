@@ -15,4 +15,11 @@ export class TrotinetService {
   public getTrotineti(): Observable<Trotinet[]> {
     return this.http.get<Trotinet[]>(this.url + "/trotinet",{headers: environment.headerOption})
   }
+  public addVozilo(vozilo:any) {
+    return this.http.post(this.url + "/vozilo",vozilo);
+  }
+
+  public addTrotinet(trotinet:any) {
+    return this.http.post(this.url + "/trotinet",trotinet);
+  }
 }

@@ -12,6 +12,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { BiciklService } from '../../services/bicikl/bicikl.service';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-bicikl',
@@ -22,12 +23,13 @@ import { BiciklService } from '../../services/bicikl/bicikl.service';
   styleUrl: './bicikl.component.css'
 })
 export class BiciklComponent implements AfterViewInit, OnInit {
-      displayedColumns2: string[] = ['serijskiBroj', 'domet', 'datumNabavke', 'cijenaNabavke', 'model','pokvareno','iznajmljeno','slika','proizvodjac'];
+      displayedColumns2: string[] = [ 'domet', 'datumNabavke', 'cijenaNabavke', 'model','pokvareno','iznajmljeno','slika','proizvodjac'];
       dataSource2 = new MatTableDataSource<any>([]);
       @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
       bicikli: any[] = [];
       bicikl: any[] = [];
       formattedDate: string = '';
+      selection = new SelectionModel<any>(false,[]);
       constructor(private biciklService: BiciklService, private datePipe: DatePipe){}
       
       ngOnInit(): void {
@@ -40,6 +42,7 @@ export class BiciklComponent implements AfterViewInit, OnInit {
       }
 
       public loadData() {
+        this.bicikl = [];
         this.biciklService.getBicikli().subscribe(
           (response) => {
             this.bicikli = response;
@@ -64,12 +67,13 @@ export class BiciklComponent implements AfterViewInit, OnInit {
               const month = ('0' + (date.getMonth() + 1)).slice(-2);
               const day = ('0' + date.getDate()).slice(-2); 
               const formattedDate = `${year}-${month}-${day}`;
-              const biciklTemp = [{serijskiBroj: bicikl[keys[0]], domet: bicikl[keys[1]], datumNabavke: formattedDate, cijenaNabavke: bicikl[keys[3]], model: bicikl[keys[4]],
+              const biciklTemp = { domet: bicikl[keys[1]], datumNabavke: formattedDate, cijenaNabavke: bicikl[keys[3]], model: bicikl[keys[4]],
                 pokvareno: pokvareno,iznajmljeno: iznajmljeno,
-                 slika: bicikl[keys[7]], proizvodjac: bicikl[keys[8]]}];
+                 slika: bicikl[keys[7]], proizvodjac: bicikl[keys[8]]};
               this.bicikl.push(biciklTemp);
-              this.dataSource2.data = [...biciklTemp];
+             
             })
+          this.dataSource2.data = this.bicikl;
           },
           (error) => {
             console.error('Greška prilikom dobijanja podataka:', error);
@@ -99,7 +103,55 @@ export class BiciklComponent implements AfterViewInit, OnInit {
         if(inputElement && inputElement2) {     
           inputElement.style.display = 'none';
           inputElement2.style.display = 'block';
-          
+          this.loadData();
+        }
+      }
+      selectRow(row: any) {
+        this.selection.toggle(row); // Toggle selektovanje reda
+        console.log('Selektovani podaci:', row);
+      }
+
+      serijskiBroj: string = '';
+      datumNabavke: Date | null = null;
+      cijena: number = 0;
+      model: string = '';
+      slika: string = '';
+      proizvodjac: string = '';
+      domet: number = 0;
+
+      onSubmit(form: any) {
+        if(form.valid) {
+          const date = this.datumNabavke;
+          let date2;
+          if(date){
+            const year = date.getFullYear();
+            const month = ('0' + (date.getMonth() + 1)).slice(-2);  // Dodajemo 1 jer meseci počinju od 0
+            const day = ('0' + date.getDate()).slice(-2);  // Dodajemo 0 ako je dan manji od 10
+            const formattedDate = `${year}-${month}-${day}`;
+            date2 = formattedDate;
+          }
+          const vozilo = {
+            uuid: this.serijskiBroj,
+            datumNabavke: date2,
+            cijenaNabavke: this.cijena,
+            model: this.model,
+            pokvareno: 0,
+            iznajmljeno: 0,
+            slika: this.slika,
+            idProizvodjac: 1
+          }
+          this.biciklService.addVozilo(vozilo).subscribe((res:any) => {
+            console.log("Uspjesno ste dodali vozilo", res);
+            const biciklTemp = {
+              voziloUuid: res?.uuid,
+              domet: this.domet
+            }
+            this.biciklService.addBicikl(biciklTemp).subscribe((res) => {
+              console.log("Uspjesno ste dodali trotinet",res);
+              this.ponisti();
+            });
+          });
+
         }
       }
 }

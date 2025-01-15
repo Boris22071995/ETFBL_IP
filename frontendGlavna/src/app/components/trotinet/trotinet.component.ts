@@ -12,6 +12,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { TrotinetService } from '../../services/trotinet/trotinet.service';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-trotinet',
@@ -23,11 +24,12 @@ import { TrotinetService } from '../../services/trotinet/trotinet.service';
 })
 export class TrotinetComponent implements AfterViewInit,OnInit {
   
-    displayedColumns2: string[] = ['serijskiBroj', 'maksimalnaBrzina', 'datumNabavke', 'cijenaNabavke', 'model','pokvareno','iznajmljeno','slika','proizvodjac'];
+    displayedColumns2: string[] = [ 'maksimalnaBrzina', 'datumNabavke', 'cijenaNabavke', 'model','pokvareno','iznajmljeno','slika','proizvodjac'];
   dataSource2 = new MatTableDataSource<any>([]);
   trotineti: any[] = [];
   trotinet: any[] = [];
   formattedDate: string = '';
+  selection = new SelectionModel<any>(false,[]);
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   constructor(private trotinetService: TrotinetService, private datePipe: DatePipe){}
   ngOnInit(): void {
@@ -39,6 +41,7 @@ export class TrotinetComponent implements AfterViewInit,OnInit {
       }
     }
     public loadData() {
+      this.trotinet = [];
       this.trotinetService.getTrotineti().subscribe(
         (response)=> {
           this.trotineti = response;
@@ -64,12 +67,13 @@ export class TrotinetComponent implements AfterViewInit,OnInit {
             const day = ('0' + date.getDate()).slice(-2); 
             const formattedDate = `${year}-${month}-${day}`;
 
-            const trotinetTemp=[{serijskiBroj:trotinet[keys[1]], maksimalnaBrzina: trotinet[keys[0]], datumNabavke: formattedDate, cijenaNabavke: trotinet[keys[3]], model: trotinet[keys[4]],
+            const trotinetTemp={maksimalnaBrzina: trotinet[keys[0]], datumNabavke: formattedDate, cijenaNabavke: trotinet[keys[3]], model: trotinet[keys[4]],
               pokvareno: pokvareno, iznajmljeno: iznajmljeno, slika: trotinet[keys[7]],
-              proizvodjac: trotinet[keys[8]]}];
+              proizvodjac: trotinet[keys[8]]};
               this.trotinet.push(trotinetTemp);
-              this.dataSource2.data = [...trotinetTemp];
+              
           })
+          this.dataSource2.data = this.trotinet;
         },
         (error) => {
           console.error('Greška prilikom dobijanja podataka:', error);
@@ -90,7 +94,7 @@ export class TrotinetComponent implements AfterViewInit,OnInit {
       if(inputElement && inputElement2) {
         inputElement2.style.display = 'none';
         inputElement.style.display = 'block';
-        
+       
       }
     }
 
@@ -101,6 +105,54 @@ export class TrotinetComponent implements AfterViewInit,OnInit {
       if(inputElement && inputElement2) {     
         inputElement.style.display = 'none';
         inputElement2.style.display = 'block';
+        this.loadData();
+      }
+    }
+    selectRow(row: any) {
+      this.selection.toggle(row); // Toggle selektovanje reda
+      console.log('Selektovani podaci:', row);
+    }
+
+    serijskiBroj: string = '';
+    datumNabavke: Date | null = null;
+    cijena: number = 0;
+    model: string = '';
+    slika: string = '';
+    proizvodjac: string = '';
+    brzina: number = 0;
+
+    onSubmit(form: any) {
+      if(form.valid) {
+        const date = this.datumNabavke;
+        let date2;
+        if(date) {
+          const year = date.getFullYear();
+          const month = ('0' + (date.getMonth() + 1)).slice(-2);  // Dodajemo 1 jer meseci počinju od 0
+          const day = ('0' + date.getDate()).slice(-2);  // Dodajemo 0 ako je dan manji od 10
+          const formattedDate = `${year}-${month}-${day}`;
+          date2 = formattedDate;
+        }
+        const vozilo = {
+          uuid: this.serijskiBroj,
+          datumNabavke: date2,
+          cijenaNabavke: this.cijena,
+          model: this.model,
+          pokvareno: 0,
+          iznajmljeno: 0,
+          slika: this.slika,
+          idProizvodjac: 1
+        }
+        this.trotinetService.addVozilo(vozilo).subscribe((res: any)=>{
+          console.log("Uspjesno ste dodali vozilo", res);
+          const trotinetTemp = {
+            voziloUuid: res?.uuid,
+            maksimalnaBrzina: this.brzina
+          }
+          this.trotinetService.addTrotinet(trotinetTemp).subscribe((res)=> {
+            console.log("Uspjesno ste dodali trotinet", res);
+            this.ponisti();
+          });
+        });
         
       }
     }

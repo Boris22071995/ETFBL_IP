@@ -15,4 +15,11 @@ export class BiciklService {
   public getBicikli(): Observable<Bicikl[]> {
     return this.http.get<Bicikl[]>(this.url + "/bicikl", {headers: environment.headerOption});
   }
+  public addVozilo(vozilo:any) {
+    return this.http.post(this.url + "/vozilo",vozilo);
+  }
+
+  public addBicikl(bicikl:any) {
+    return this.http.post(this.url + "/bicikl",bicikl);
+  }
 }
