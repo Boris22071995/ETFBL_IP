@@ -44,6 +44,8 @@ export class AppComponent{
   
     public route(name: string) {
       this.router.navigate(['/'+name.toLocaleLowerCase()]);
-       
+    }
+    public routeProizvodjac() {
+      this.router.navigate(['/proizvodjac']);
     }
 }

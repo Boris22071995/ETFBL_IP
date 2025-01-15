@@ -5,6 +5,7 @@ import { TrotinetComponent } from './components/trotinet/trotinet.component';
 import { BiciklComponent } from './components/bicikl/bicikl.component';
 import { ZaposleniComponent } from './components/zaposleni/zaposleni.component';
 import { KlijentiComponent } from './components/klijenti/klijenti.component';
+import { ProizvodjacComponent } from './components/proizvodjac/proizvodjac.component';
 //import { AdminComponentComponent } from './admin-component/admin-component.component';
 
 export const routes: Routes = [
@@ -29,5 +30,9 @@ export const routes: Routes = [
     {
         path: 'klijenti',
         component: KlijentiComponent
+    },
+    {
+        path: 'proizvodjac',
+        component: ProizvodjacComponent
     }
 ];
