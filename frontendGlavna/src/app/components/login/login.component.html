@@ -1,0 +1,27 @@
+<div class="login-page">
+    <div class="header">
+      <h1>Aplikacija za iznajmljivanje vozila</h1>
+    </div>
+  
+    <div class="login-form">
+      <h2>Dobro došli, prijavite se</h2>
+  
+      <form (ngSubmit)="onSubmit()">
+        <mat-form-field class="full-width">
+          <mat-label>Korisničko ime</mat-label>
+          <input matInput placeholder="Korisničko ime" [(ngModel)]="username" name="username" required />
+          <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+  
+        <mat-form-field class="full-width">
+            <mat-label>Šifra</mat-label>
+            <input matInput placeholder="Šifra" [(ngModel)]="password" name="password" [type]="passwordVisible ? 'text' : 'password'" required />
+            <mat-icon matPrefix>lock</mat-icon>
+          </mat-form-field>
+  
+        <button mat-raised-button color="primary" type="submit">Prijava</button>
+        <button mat-raised-button color="primary" type="reset">Ponisti</button>
+      </form>
+    </div>
+  </div>
+  

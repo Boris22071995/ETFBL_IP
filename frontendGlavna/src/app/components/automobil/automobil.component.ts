@@ -42,7 +42,9 @@ export class AutomobilComponent implements AfterViewInit, OnInit{
     }
   }
 
+  autoSaId: any[] = [];
   public loadData() {
+    this.autoSaId = [];
     this.auto = [];
     this.automobilService.getAutomobili().subscribe(
       (response) => {
@@ -68,10 +70,14 @@ export class AutomobilComponent implements AfterViewInit, OnInit{
         const month = ('0' + (date.getMonth() + 1)).slice(-2);
         const day = ('0' + date.getDate()).slice(-2); 
         const formattedDate = `${year}-${month}-${day}`;
+        const autoTempId = {serijskiBroj: automobil[keys[0]],opis: automobil[keys[1]], datumNabavke: formattedDate, cijenaNabavke: automobil[keys[3]], model: automobil[keys[4]],
+          pokvareno: pokvareno,iznajmljeno: iznajmljeno,
+           slika: automobil[keys[7]], proizvodjac: automobil[keys[8]]};
         const autoTemp = {opis: automobil[keys[1]], datumNabavke: formattedDate, cijenaNabavke: automobil[keys[3]], model: automobil[keys[4]],
            pokvareno: pokvareno,iznajmljeno: iznajmljeno,
             slika: automobil[keys[7]], proizvodjac: automobil[keys[8]]};
-           this.auto.push(autoTemp);         
+           this.auto.push(autoTemp); 
+           this.autoSaId.push(autoTempId);        
         })
         this.dataSource2.data = this.auto;
       },
@@ -149,10 +155,41 @@ export class AutomobilComponent implements AfterViewInit, OnInit{
       console.log(vozilo);
     }  
   }
+  selectedRow:any;
   selectRow(row: any) {
     this.selection.toggle(row); // Toggle selektovanje reda
-    console.log('Selektovani podaci:', row);
+    //console.log('Selektovani podaci:', row);
+    this.selectedRow = row;
+   
   }
+ public obrisi() {
+  let serijskiBroj = ''
+  if(confirm('Da li ste sigurni da želite da obrišete ovo vozilo?')){
+  this.autoSaId.forEach(automobil => {
+    if(automobil.datumNabavke == this.selectedRow.datumNabavke && automobil.opis == this.selectedRow.opis) {
+      serijskiBroj = automobil.serijskiBroj;
+    }else {
+      
+    }
+  })
+  this.automobilService.deleteAutomobil(serijskiBroj).subscribe(() => {
+    alert('Automobil je uspjesno obrisan.');
+    this.loadData();
+    this.selection.clear();
+  },
+  error => {
+    console.error('Došlo je do greške pri brisanju automobila:', error);
+    alert('Greška pri brisanju vozila.');
+  });
+  this.automobilService.deleteVozilo(serijskiBroj).subscribe(() => {
+    console.log("Obrisano vozilo");
+  },
+  error => {
+    console.log("Nije Obrisano vozilo");
+   });
+  }
+ 
+ }
 
 }
 

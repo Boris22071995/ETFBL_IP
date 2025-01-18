@@ -40,8 +40,9 @@ export class BiciklComponent implements AfterViewInit, OnInit {
           this.dataSource2.paginator = this.paginator;
         }
       }
-
+      biciklSaId: any[] = [];
       public loadData() {
+        this.biciklSaId = [];
         this.bicikl = [];
         this.biciklService.getBicikli().subscribe(
           (response) => {
@@ -67,10 +68,14 @@ export class BiciklComponent implements AfterViewInit, OnInit {
               const month = ('0' + (date.getMonth() + 1)).slice(-2);
               const day = ('0' + date.getDate()).slice(-2); 
               const formattedDate = `${year}-${month}-${day}`;
+              const biciklTempId = {serijskiBroj: bicikl[keys[0]], domet: bicikl[keys[1]], datumNabavke: formattedDate, cijenaNabavke: bicikl[keys[3]], model: bicikl[keys[4]],
+                pokvareno: pokvareno,iznajmljeno: iznajmljeno,
+                 slika: bicikl[keys[7]], proizvodjac: bicikl[keys[8]]};
               const biciklTemp = { domet: bicikl[keys[1]], datumNabavke: formattedDate, cijenaNabavke: bicikl[keys[3]], model: bicikl[keys[4]],
                 pokvareno: pokvareno,iznajmljeno: iznajmljeno,
                  slika: bicikl[keys[7]], proizvodjac: bicikl[keys[8]]};
               this.bicikl.push(biciklTemp);
+              this.biciklSaId.push(biciklTempId);
              
             })
           this.dataSource2.data = this.bicikl;
@@ -106,9 +111,11 @@ export class BiciklComponent implements AfterViewInit, OnInit {
           this.loadData();
         }
       }
+      selectedRow: any;
       selectRow(row: any) {
         this.selection.toggle(row); // Toggle selektovanje reda
-        console.log('Selektovani podaci:', row);
+        //console.log('Selektovani podaci:', row);
+        this.selectedRow = row;
       }
 
       serijskiBroj: string = '';
@@ -152,6 +159,32 @@ export class BiciklComponent implements AfterViewInit, OnInit {
             });
           });
 
+        }
+      }
+
+      public obrisi() {
+        let serijskiBroj = '';
+        if(confirm('Da li ste sigurni da želite da obrišete ovo vozilo?')) {
+          this.biciklSaId.forEach(bicikl => {
+            if(bicikl.datumNabavke == this.selectedRow.datumNabavke && bicikl.domet == this.selectedRow.domet){
+              serijskiBroj = bicikl.serijskiBroj;
+            }
+          })
+          this.biciklService.deleteBicikl(serijskiBroj).subscribe(()=> {
+            alert('Bicikl je uspjesno obrisan.');
+            this.loadData();
+            this.selection.clear();
+          },
+          error =>{
+            console.error('Došlo je do greške pri brisanju bicikla:', error);
+            alert('Greška pri brisanju vozila.');
+          });
+          this.biciklService.deleteVozilo(serijskiBroj).subscribe(() => {
+            console.log("Obrisano vozilo");
+          }, 
+          error =>{
+            console.log("Nije Obrisano vozilo");
+          });
         }
       }
 }

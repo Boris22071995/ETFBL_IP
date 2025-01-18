@@ -11,6 +11,8 @@ export class BiciklService {
 
   constructor(private http: HttpClient) { }
   url = environment.apiUrl;
+  private urlDelVozilo = `${environment.apiUrl}/vozilo`;
+  private urlDelBicikl = `${environment.apiUrl}/bicikl`;
 
   public getBicikli(): Observable<Bicikl[]> {
     return this.http.get<Bicikl[]>(this.url + "/bicikl", {headers: environment.headerOption});
@@ -21,5 +23,13 @@ export class BiciklService {
 
   public addBicikl(bicikl:any) {
     return this.http.post(this.url + "/bicikl",bicikl);
+  }
+
+  public deleteBicikl(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.urlDelBicikl}/${id}`);
+  }
+
+  public deleteVozilo(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.urlDelVozilo}/${id}`);
   }
 }

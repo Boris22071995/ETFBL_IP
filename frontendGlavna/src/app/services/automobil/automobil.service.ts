@@ -11,6 +11,8 @@ export class AutomobilService {
 
   constructor(private http: HttpClient) { }
   url = environment.apiUrl;
+  private urlDelVozilo = `${environment.apiUrl}/vozilo`;
+  private urlDelAuto = `${environment.apiUrl}/automobil`;
 
   public getAutomobili(): Observable<Automobil[]> {
     return this.http.get<Automobil[]>(this.url + "/automobil",{headers: environment.headerOption});
@@ -22,5 +24,13 @@ export class AutomobilService {
 
   public addAutomobil(automobil:any) {
     return this.http.post(this.url + "/automobil",automobil);
+  }
+
+  public deleteAutomobil(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.urlDelAuto}/${id}`);
+  }
+
+  public deleteVozilo(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.urlDelVozilo}/${id}`);
   }
 }

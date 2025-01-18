@@ -30,7 +30,7 @@ const TREE_DATA: FoodNode[] = [
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent{
+export class AppComponent implements OnInit{
   title = 'frontendGlavna';
     router = inject(Router);
 
@@ -41,6 +41,9 @@ export class AppComponent{
     childrenAccessor = (node: FoodNode) => node.children ?? [];
   
     hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+    ngOnInit(): void {
+      this.router.navigate(['/login']);
+    }
   
     public route(name: string) {
       this.router.navigate(['/'+name.toLocaleLowerCase()]);

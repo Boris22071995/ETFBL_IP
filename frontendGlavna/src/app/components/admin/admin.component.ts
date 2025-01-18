@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,7 +26,7 @@ const TREE_DATA: FoodNode[] = [
 
 @Component({
   selector: 'app-admin',
-  imports: [MatToolbarModule,MatSidenavModule,MatIconModule,MatListModule,MatButtonModule,MatTreeModule],
+  imports: [RouterOutlet,MatToolbarModule,MatSidenavModule,MatIconModule,MatListModule,MatButtonModule,MatTreeModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })
@@ -39,7 +40,11 @@ export class AdminComponent {
   hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
 
   public route(name: string) {
-    this.router.navigate(['/'+name.toLocaleLowerCase()]);
+    console.log("OVDJE SMO I GRESKA JE");
+    this.router.navigate(['home/'+name.toLocaleLowerCase()]);
     console.log(name);
+  }
+  public routeProizvodjac() {
+    this.router.navigate(['home/proizvodjaci']);
   }
 }

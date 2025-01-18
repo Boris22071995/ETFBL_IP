@@ -40,7 +40,9 @@ export class TrotinetComponent implements AfterViewInit,OnInit {
         this.dataSource2.paginator = this.paginator;
       }
     }
+    trotinetSaId: any[] = [];
     public loadData() {
+      this.trotinetSaId = [];
       this.trotinet = [];
       this.trotinetService.getTrotineti().subscribe(
         (response)=> {
@@ -67,10 +69,15 @@ export class TrotinetComponent implements AfterViewInit,OnInit {
             const day = ('0' + date.getDate()).slice(-2); 
             const formattedDate = `${year}-${month}-${day}`;
 
+            const trotinetTempSaId={serijskiBroj:trotinet[keys[1]],maksimalnaBrzina: trotinet[keys[0]], datumNabavke: formattedDate, cijenaNabavke: trotinet[keys[3]], model: trotinet[keys[4]],
+              pokvareno: pokvareno, iznajmljeno: iznajmljeno, slika: trotinet[keys[7]],
+              proizvodjac: trotinet[keys[8]]};
+
             const trotinetTemp={maksimalnaBrzina: trotinet[keys[0]], datumNabavke: formattedDate, cijenaNabavke: trotinet[keys[3]], model: trotinet[keys[4]],
               pokvareno: pokvareno, iznajmljeno: iznajmljeno, slika: trotinet[keys[7]],
               proizvodjac: trotinet[keys[8]]};
               this.trotinet.push(trotinetTemp);
+              this.trotinetSaId.push(trotinetTempSaId);
               
           })
           this.dataSource2.data = this.trotinet;
@@ -108,9 +115,39 @@ export class TrotinetComponent implements AfterViewInit,OnInit {
         this.loadData();
       }
     }
+    selectedRow: any;
     selectRow(row: any) {
       this.selection.toggle(row); // Toggle selektovanje reda
       console.log('Selektovani podaci:', row);
+      this.selectedRow = row;
+      
+    }
+
+    public obrisi() {
+      let serijskiBroj = '';
+      if(confirm('Da li ste sigurni da želite da obrišete ovo vozilo?')) {
+        this.trotinetSaId.forEach(trotinet => {
+          if(trotinet.datumNabavke == this.selectedRow.datumNabavke && trotinet.maksimalnaBrzina == this.selectedRow.maksimalnaBrzina) {
+            serijskiBroj = trotinet.serijskiBroj;
+          }
+        })
+        this.trotinetService.deleteTrotinet(serijskiBroj).subscribe(()=>{
+          alert('Trotinet je uspjesno obrisan.');
+          this.loadData();
+          this.selection.clear();
+        },
+        error => {
+          console.error('Došlo je do greške pri brisanju trotineta:', error);
+          alert('Greška pri brisanju vozila.');
+        });
+        this.trotinetService.deleteVozilo(serijskiBroj).subscribe(() => {
+          console.log("Obrisano vozilo");
+          //this.selection.deselect();
+        }, 
+        error => {
+          console.log("Nije Obrisano vozilo");
+        });
+      }
     }
 
     serijskiBroj: string = '';
